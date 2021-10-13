@@ -50,7 +50,7 @@ https://xrpl.org/set-up-secure-signing.html     # security of your secret keys
 
 conda create -n XRP python=3
 conda activate XRP
-/home/zac/anaconda3/envs/XRP/bin/pip install xrpl-py
+$HOME/anaconda3/envs/XRP/bin/pip install xrpl-py
 conda install pandas numpy matplotlib ipywidgets pyqt
 python -m ipykernel install --user --name XRP --display-name "Python 3 (XRP)"
 conda deactivate
