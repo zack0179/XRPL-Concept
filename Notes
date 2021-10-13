@@ -1,0 +1,112 @@
+# proof of concept - make a button to issue a token in the XRP Ledger. 
+##=================##
+## Reference links ##
+##=================##
+https://xrpl.org/get-started-using-python.html  # fallowing for python dev 
+https://xrpl.org/parallel-networks.html         # Testnet vs Mainnet explanation
+https://xrpl.org/production-readiness.html      # to build a robust, safe production system
+https://xrpl.org/set-up-secure-signing.html     # security of your secret keys
+
+##================##
+## High lvl notes ##
+##================##
+############################
+# Generic Workflow steps: ##
+############################
+1) Connect to the XRP Ledger
+    - for POC 
+        -- we are going to connect to the Testnet using xrpl.clients python module
+        -- Testnet is a testing ground for software built on the XRP Ledger
+            - this may allow testing without the required:
+                - two funded XRP Ledger accounts, each with an address, secret key, and some XRP.
+    - for production XRP Ledger
+        -- need to connect to the Mainnet
+        -- this is The XRP Ledger, a decentralized cryptographic ledger powered by a network of peer-to-peer servers and the home of XRP.
+        -- there are two ways to connect to Mainnet
+            - installing a core server and running a node yourself
+                - this is "in house server option"
+            - use a public server
+        -- each option has sercurity, cost, and other aspects that need to be considerend and understood. 
+2) Generate a wallet
+
+3) Query the XRP Ledger
+
+######################
+# Common use cases: ##
+######################
+-- Adding XRP into your wallet
+
+-- intergrating with the decentralized exchage
+
+-- Isssuing tokens
+
+##===========##
+## Dev notes ##
+##===========##
+################################
+# First: need env for testing ##
+################################
+## going to try this on Linux Mint 19.2 using conda package manager ##
+
+conda create -n XRP python=3
+conda activate XRP
+/home/zac/anaconda3/envs/XRP/bin/pip install xrpl-py
+conda install pandas numpy matplotlib ipywidgets pyqt
+python -m ipykernel install --user --name XRP --display-name "Python 3 (XRP)"
+conda deactivate
+
+# note: can not run xrpl-py within jupyter kernal --> asyncio.run() cannot be called from a running event loop
+
+###############################################
+# Second: need python code to generate token ##
+###############################################
+# copy of example code ran at termenal in XRP env
+issue_xrp_token.py
+# created python object that reproduces above
+xrp_poc.py
+
+###########################################
+# 3rd: making QT app to implment py code ##
+###########################################
+# using QT designer to create siple templt app with single button
+test1.ui
+# compile to python code
+pyuic5 -x test1.ui -o qt_issue_v0.py
+# updating python code to implament xrp_poc.py
+qt_issue_v1.py
+
+#############################################
+# 4th: need to host the app in a container ##
+#############################################
+# Notes for creating docker container. 
+
+1. create Dockerfile.dev file
+    - in Dockerfile.dev 
+2. docker build -t analytics-image -f Dockerfile.dev . (build the image necessary)
+    - rerun setp 2 only if there is a change in the Dockerfile.dev
+3. docker run --rm -d -p 8501:8501 -v "$(pwd):/app" analytics-image:latest
+    - step 3 will start the container, conatiner will run until stopped
+        - http://localhost:8501/
+4. docker ps 
+    - (will allow you to see all active containers, from here you need to get the container ID)
+5. docker logs -f <containerID> 
+    - (you follow the logs until CTRL + C)
+6. docker stop <containerID> 
+    - stops the running container
+7. docker exec -it <contianerID> bash 
+    - (enters the terminal of the container)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
