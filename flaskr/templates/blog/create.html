@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Mint NFT{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label for="title">Title</label>
+    <input name="title" id="title" value="{{ request.form['title'] }}" required>
+    <label for="currency_code">currency code</label>
+    <textarea name="currency_code" id="currency_code">{{ request.form['currency_code'] }}</textarea>
+    <label for="issue_quantity">issue quantity</label>
+    <textarea name="issue_quantity" id="issue_quantity">{{ request.form['issue_quantity'] }}</textarea>
+    <input type="submit" value="Issue">
+  </form>
+{% endblock %}

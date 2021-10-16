@@ -1,6 +1,0 @@
-xrpl-py
-pandas 
-numpy 
-matplotlib 
-ipywidgets 
-pyqt5
