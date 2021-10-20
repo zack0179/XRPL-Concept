@@ -1,5 +1,6 @@
-from flaskr import create_app
-from flasker.db import init_db_command 
+# -*- coding: utf-8 -*-
 
-init_db_command()
+from flaskr import create_app, db
+
+db.init_db()
 application = create_app()
