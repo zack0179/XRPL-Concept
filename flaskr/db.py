@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Sat Oct 16 08:59:27 2021
 
-@author: zac
-"""
 
 import sqlite3
 
