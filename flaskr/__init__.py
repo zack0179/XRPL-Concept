@@ -9,7 +9,7 @@ def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
         SECRET_KEY=os.environ.get("SECRET_KEY"),
-        DATABASE=os.environ.get("DATABASE_URI"),
+        DATABASE=os.environ.get("DATABASE_URL"),
     )
 
     if test_config is None:
