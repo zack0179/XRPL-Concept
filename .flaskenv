@@ -1,3 +1,3 @@
-export FLASK_ENV=development
-export FLASK_APP=flaskr
+FLASK_ENV=development
+FLASK_APP=flaskr
 
