@@ -1,7 +1,6 @@
 *.pyc
 *.bash
 __pycache__/
-.env
 
 instance/
 
