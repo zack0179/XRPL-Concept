@@ -13,7 +13,7 @@ CREATE TABLE post (
   author_id INTEGER NOT NULL,
   created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   title TEXT NOT NULL,
-  wallet_accout TEXT NOT NULL,
+  wallet_balence TEXT NOT NULL,
   issue_quantity REAL NOT NULL,
   FOREIGN KEY (author_id) REFERENCES user (id),
   FOREIGN KEY (wallet_balence) REFERENCES user (balence)
