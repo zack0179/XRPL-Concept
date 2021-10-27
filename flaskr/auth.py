@@ -24,7 +24,7 @@ def register():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        account = xrp_poc.usr_wallet()
+        balence = request.form['balence']
         db = get_db()
         error = None
 
@@ -36,8 +36,8 @@ def register():
         if error is None:
             try:
                 db.execute(
-                    "INSERT INTO user (username, password, account) VALUES (?, ?, ?)",
-                    (username, generate_password_hash(password), account),
+                    "INSERT INTO user (username, password, balence) VALUES (?, ?, ?)",
+                    (username, generate_password_hash(password), balence),
                 )
                 db.commit()
             except db.IntegrityError:
@@ -68,7 +68,12 @@ def login():
 
         if error is None:
             session.clear()                 # session is a dict that stores data across requests
+            client = xrp_poc.connect_testnet()
+            hot_wallet, cold_wallet = xrp_poc.set_service(client)
+            usr_wallet = xrp_poc.usr_wallet()
             session['user_id'] = user['id'] # user id is stored in session when loged in
+            session['service'] = {'client': client, 'hot': hot_wallet, 'cold': cold_wallet,
+                                  'usr': usr_wallet} # wallet objs stored in session when loged in
             return redirect(url_for('index'))
 
         flash(error)

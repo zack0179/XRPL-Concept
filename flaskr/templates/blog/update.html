@@ -10,7 +10,7 @@
     <input name="title" id="title"
       value="{{ request.form['title'] or post['title'] }}" required>
     <label for="currency_code">Wallet Accout</label>
-    <p name="currency_code" id="currency_code">{{ g.user['account']}}</p>
+    <p name="currency_code" id="currency_code">{{ session['service']['usr'].classic_address }}</p>
     <label for="issue_quantity">issue quantity</label>
     <textarea name="issue_quantity" id="issue_quantity">{{ request.form['issue_quantity'] or post['issue_quantity']}}</textarea>
     <input type="submit" value="Issue">

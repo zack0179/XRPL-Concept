@@ -1,4 +1,4 @@
-#!/home/zac/anaconda3/envs/XRP/bin/ python3
+
 # -*- coding: utf-8 -*-
 """
 Purpose - Proof of concept for creating a token in the XRP Ledger
@@ -171,8 +171,16 @@ def usr_wallet():
     client = connect_testnet()
     user_wallet = generate_faucet_wallet(client, debug=True)
     config_usr(user_wallet, client)
-    return user_wallet.classic_address
+    return user_wallet
 
+def set_service(client):
+    hot_wallet, cold_wallet = connect_wallets(client)
+    config_cold(cold_wallet, client)
+    config_hot(hot_wallet, client)
+    # 2) Create trust line from hot to cold address
+    create_trust(hot_wallet, cold_wallet, client,
+                 currency_code = "SEZ")
+    return hot_wallet, cold_wallet
 
 def xrp_poc(issue_quantity, currency_code = "USD"):
     '''wraper'''
@@ -197,4 +205,4 @@ def xrp_poc(issue_quantity, currency_code = "USD"):
 
 if __name__ == "__main__":
 
-    print(usr_wallet())
+    print(usr_wallet().classic_address)
