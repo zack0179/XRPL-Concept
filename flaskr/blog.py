@@ -20,7 +20,7 @@ bp = Blueprint('blog', __name__)
 def index():
     db = get_db()
     posts = db.execute(
-        'SELECT p.id, title, currency_code, issue_quantity, created, author_id, username'
+        'SELECT p.id, title, issue_quantity, created, author_id, username'
         ' FROM post p JOIN user u ON p.author_id = u.id'
         ' ORDER BY created DESC'
     ).fetchall() # fetchall returns all query resuts in db
@@ -32,17 +32,11 @@ def index():
 def create():
     if request.method == 'POST':
         title = request.form['title']
-        currency_code = request.form['currency_code']
         issue_quantity = request.form['issue_quantity']
         error = None
 
         if not title:
             title = 'New token.'
-
-        if not issue_quantity:
-            error = 'Quantity is required.'
-        elif currency_code == "XRP":
-            error = 'All currencies other than XRP can be represented in the XRP Ledger as issued currencies.'
 
 
         if error is not None:
@@ -50,9 +44,9 @@ def create():
         else:
             db = get_db()
             db.execute(
-                'INSERT INTO post (title, issue_quantity, currency_code, author_id)'
+                'INSERT INTO post (title, issue_quantity, wallet_accout, author_id)'
                 ' VALUES (?, ?, ?, ?)',
-                (title, issue_quantity, currency_code, g.user['id'])
+                (title, issue_quantity, g.user['account'], g.user['id'])
             )
             db.commit()
             return redirect(url_for('blog.index'))
@@ -64,7 +58,7 @@ def create():
 #   author matches the logged in user
 def get_post(id, check_author=True):
     post = get_db().execute(
-        'SELECT p.id, title, issue_quantity, currency_code, created, author_id, username'
+        'SELECT p.id, title, issue_quantity, wallet_accout, created, author_id, username'
         ' FROM post p JOIN user u ON p.author_id = u.id'
         ' WHERE p.id = ?',
         (id,)
@@ -89,7 +83,6 @@ def update(id):
 
     if request.method == 'POST':
         title = request.form['title']
-        currency_code = request.form['currency_code']
         issue_quantity = request.form['issue_quantity']
         error = None
 
@@ -101,9 +94,9 @@ def update(id):
         else:
             db = get_db()
             db.execute(
-                'UPDATE post SET title = ?, currency_code = ?, issue_quantity = ?'
+                'UPDATE post SET title = ?, issue_quantity = ?'
                 ' WHERE id = ?',
-                (title, currency_code, issue_quantity, id)
+                (title, issue_quantity, id)
             )
             db.commit()
             return redirect(url_for('blog.index'))
