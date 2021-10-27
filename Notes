@@ -65,15 +65,20 @@ issue_xrp_token.py
 # created python object that reproduces above
 xrp_poc.py
 
-###########################################
-# 3rd: making QT app to implment py code ##
-###########################################
-# using QT designer to create siple templt app with single button
-test1.ui
-# compile to python code
-pyuic5 -x test1.ui -o qt_issue_v0.py
-# updating python code to implament xrp_poc.py
-qt_issue_v1.py
+##############################################
+# 3rd: making flask app to implment py code ##
+##############################################
+mkdir app
+touch __init__.py
+touch app/routes.py
+touch app/microblog.py
+export FLASK_APP=microblog.py
+export FLASK_ENV=development
+flask run
+or flask run --host=0.0.0.0
+
+./flasker/kickit.bash # this is app factory example
+pip install -e . # This tells pip to find setup.py in the current directory and install it in editable or development mode
 
 #############################################
 # 4th: need to host the app in a container ##
@@ -84,9 +89,9 @@ qt_issue_v1.py
     - in Dockerfile.dev 
 2. docker build -t analytics-image -f Dockerfile.dev . (build the image necessary)
     - rerun setp 2 only if there is a change in the Dockerfile.dev
-3. docker run --rm -d -p 8501:8501 -v "$(pwd):/app" analytics-image:latest
+3. docker run --rm -d -p 5555:5555 -v "$(pwd):/app" analytics-image:latest
     - step 3 will start the container, conatiner will run until stopped
-        - http://localhost:8501/
+        - http://localhost:5555/
 4. docker ps 
     - (will allow you to see all active containers, from here you need to get the container ID)
 5. docker logs -f <containerID> 
