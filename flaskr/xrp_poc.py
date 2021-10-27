@@ -1,3 +1,4 @@
+#!/home/zac/anaconda3/envs/XRP/bin/ python3
 # -*- coding: utf-8 -*-
 """
 Purpose - Proof of concept for creating a token in the XRP Ledger
@@ -48,6 +49,7 @@ def connect_testnet():
     testnet_url = "https://s.altnet.rippletest.net:51234"
     return xrpl.clients.JsonRpcClient(testnet_url)
 
+
 def connect_wallets(client):
     '''returns hot and cold wallets connected to testnet'''
 
@@ -85,6 +87,21 @@ def config_hot(hot_wallet, client):
     hst_prepared = xrpl.transaction.safe_sign_and_autofill_transaction(
         transaction=hot_settings_tx,
         wallet=hot_wallet,
+        client=client,
+    )
+    return xrpl.transaction.send_reliable_submission(hst_prepared, client)
+
+
+def config_usr(usr_wallet, client):
+    '''Configure usr address'''
+
+    usr_settings_tx = xrpl.models.transactions.AccountSet(
+        account=usr_wallet.classic_address,
+        set_flag=xrpl.models.transactions.AccountSetFlag.ASF_REQUIRE_AUTH,
+    )
+    hst_prepared = xrpl.transaction.safe_sign_and_autofill_transaction(
+        transaction=usr_settings_tx,
+        wallet=usr_wallet,
         client=client,
     )
     return xrpl.transaction.send_reliable_submission(hst_prepared, client)
@@ -148,6 +165,15 @@ def check_bals(hot_wallet, cold_wallet, client, issue_quantity):
     return hot_response, cold_response
 
 
+def usr_wallet():
+    '''configures and returns a wallets address in testnet'''
+
+    client = connect_testnet()
+    user_wallet = generate_faucet_wallet(client, debug=True)
+    config_usr(user_wallet, client)
+    return user_wallet.classic_address
+
+
 def xrp_poc(issue_quantity, currency_code = "USD"):
     '''wraper'''
 
@@ -167,3 +193,8 @@ def xrp_poc(issue_quantity, currency_code = "USD"):
                                              issue_quantity = issue_quantity)
 
     return hot_response, cold_response
+
+
+if __name__ == "__main__":
+
+    print(usr_wallet())
