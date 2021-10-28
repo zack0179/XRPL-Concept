@@ -1,3 +1,3 @@
 FLASK_ENV=development
-FLASK_APP=flaskr
+FLASK_APP=flaskr 
 

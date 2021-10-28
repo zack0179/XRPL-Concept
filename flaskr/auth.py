@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 '''
 Authentication Blueprint
-    Rather than registering views and other code directly with an application,
-    they are registered with a blueprint. Then the blueprint is registered
-    with the application when it is available in the factory function
+    registering an accout and generate a wallet connected to the test net. 
 '''
 
 import functools

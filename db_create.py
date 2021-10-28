@@ -1,2 +1,2 @@
 from flaskr import db
-db.init_db_command()
+db.init_db_command() 

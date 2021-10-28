@@ -2,8 +2,9 @@
 '''
 blog blueprint
     The blog should list all posts, allow logged in users to create posts, and
-        allow the author of a post to edit or delete it.
-'''
+        allow the author of a post to edit, see their account holding value the 
+        post represents, and delete it.
+''' 
 
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, url_for
