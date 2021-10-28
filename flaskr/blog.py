@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 '''
-blog blueprint
+blog blueprint 
     The blog should list all posts, allow logged in users to create posts, and
-        allow the author of a post to edit or delete it.
+        allow the author of a post to edit or delete it. 
 '''
 
 from flask import (

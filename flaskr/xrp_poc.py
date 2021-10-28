@@ -1,4 +1,3 @@
-
 # -*- coding: utf-8 -*-
 """
 Purpose - Proof of concept for creating a token in the XRP Ledger

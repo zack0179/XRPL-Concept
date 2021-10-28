@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 '''
-Authentication Blueprint
+Authentication Blueprint 
     Rather than registering views and other code directly with an application,
     they are registered with a blueprint. Then the blueprint is registered
     with the application when it is available in the factory function

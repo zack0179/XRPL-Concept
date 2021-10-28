@@ -1,1 +1,1 @@
-web: gunicorn flaskr.kickit:application
+web: gunicorn flaskr.kickit:application  
